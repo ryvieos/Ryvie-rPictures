@@ -73,16 +73,6 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
 
-  immich-grafana:
-    container_name: immich_grafana
-    command: [ './run.sh', '-disable-reporting' ]
-    ports:
-      - 3000:3000
-    image: grafana/grafana:11.5.2-ubuntu@sha256:8b5858c447e06fd7a89006b562ba7bba7c4d5813600c7982374c41852adefaeb
-    volumes:
-      - grafana-data:/var/lib/grafana
-
 volumes:
   model-cache:
   prometheus-data:
-  grafana-data:
