@@ -15,6 +15,8 @@ import 'package:immich_mobile/interfaces/partner_api.interface.dart';
 import 'package:immich_mobile/services/sync.service.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../domain/service.mock.dart';
+import '../../fixtures/asset.stub.dart';
 import '../../infrastructure/repository.mock.dart';
 import '../../repository.mocks.dart';
 import '../../service.mocks.dart';
@@ -58,13 +60,17 @@ void main() {
     final MockAlbumMediaRepository albumMediaRepository =
         MockAlbumMediaRepository();
     final MockAlbumApiRepository albumApiRepository = MockAlbumApiRepository();
+    final MockAppSettingService appSettingService = MockAppSettingService();
+    final MockLocalFilesManagerRepository localFilesManagerRepository =
+        MockLocalFilesManagerRepository();
     final MockPartnerApiRepository partnerApiRepository =
         MockPartnerApiRepository();
     final MockUserApiRepository userApiRepository = MockUserApiRepository();
     final MockPartnerRepository partnerRepository = MockPartnerRepository();
+    final MockUserService userService = MockUserService();
 
     final owner = UserDto(
-      uid: "1",
+      id: "1",
       updatedAt: DateTime.now(),
       email: "a@b.c",
       name: "first last",
@@ -101,13 +107,16 @@ void main() {
         exifInfoRepository,
         partnerRepository,
         userRepository,
-        StoreService.I,
+        userService,
         eTagRepository,
+        appSettingService,
+        localFilesManagerRepository,
         partnerApiRepository,
         userApiRepository,
       );
+      when(() => userService.getMyUser()).thenReturn(owner);
       when(() => eTagRepository.get(owner.id))
-          .thenAnswer((_) async => ETag(id: owner.uid, time: DateTime.now()));
+          .thenAnswer((_) async => ETag(id: owner.id, time: DateTime.now()));
       when(() => eTagRepository.deleteByIds(["1"])).thenAnswer((_) async {});
       when(() => eTagRepository.upsertAll(any())).thenAnswer((_) async {});
       when(() => partnerRepository.getSharedWith()).thenAnswer((_) async => []);
@@ -254,6 +263,28 @@ void main() {
       );
       expect(c, isTrue);
       verify(() => assetRepository.updateAll(expected));
+    });
+
+    group("upsertAssetsWithExif", () {
+      test('test upsert with EXIF data', () async {
+        final assets = [AssetStub.image1, AssetStub.image2];
+
+        expect(
+          assets.map((a) => a.exifInfo?.assetId),
+          List.filled(assets.length, null),
+        );
+        await s.upsertAssetsWithExif(assets);
+        verify(
+          () => exifInfoRepository.updateAll(
+            any(
+              that: containsAll(
+                assets.map((a) => a.exifInfo!.copyWith(assetId: a.id)),
+              ),
+            ),
+          ),
+        );
+        expect(assets.map((a) => a.exifInfo?.assetId), assets.map((a) => a.id));
+      });
     });
   });
 }
