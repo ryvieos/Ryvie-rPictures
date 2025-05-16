@@ -236,9 +236,10 @@ class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
-      supportedLocales: [const Locale('en')],
+      supportedLocales: locales.values.toList(),
       path: translationsPath,
-      fallbackLocale: const Locale('en'),
+      useFallbackTranslations: true,
+      fallbackLocale: locales.values.first,
       child: const ImmichApp(),
     );
   }
