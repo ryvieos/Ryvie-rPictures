@@ -11,15 +11,12 @@
 </p>
 
 <p align="center">
-  <img src="design/rpictures-logo.svg" width="300" title="rPictures Logo">
+  <img src="design/ryvielogo.png" width="300" title="rPictures Logo">
 </p>
 
 <h3 align="center">Composant self-hosted de gestion de photos et vidéos</h3>
 <br/>
 
-<a href="https://rpictures.app">
-  <img src="design/rpictures-screenshots.png" title="Main Screenshot">
-</a>
 <br/>
 
 <p align="center">
