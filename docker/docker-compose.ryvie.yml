@@ -4,7 +4,7 @@ name: immich-prod
 
 services:
   immich-server:
-    container_name: immich_server
+    container_name:  app-rpictures-server
     image: julescloud/rpictures-server:v1.0.0
     volumes:
       - ${UPLOAD_LOCATION}/photos:/usr/src/app/upload
