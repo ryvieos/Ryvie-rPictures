@@ -4,7 +4,7 @@ name: immich-prod
 
 services:
   immich-server:
-    container_name:  app-rpictures-server
+    container_name: app-rpictures-server
     image: julescloud/rpictures-server:v1.0.0
     volumes:
       - ${UPLOAD_LOCATION}/photos:/usr/src/app/upload
@@ -19,6 +19,8 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - ldap_my_custom_network
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -32,6 +34,8 @@ services:
     restart: always
     healthcheck:
       disable: false
+    networks:
+      - ldap_my_custom_network
 
   redis:
     container_name: immich_redis
@@ -39,6 +43,8 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
+    networks:
+      - ldap_my_custom_network
 
   database:
     container_name: immich_postgres
@@ -56,13 +62,22 @@ services:
       - 5432:5432
     healthcheck:
       test: >-
-        pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1; Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+        pg_isready --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" || exit 1;
+        Chksum="$$(psql --dbname="$${POSTGRES_DB}" --username="$${POSTGRES_USER}" --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')";
+        echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
       interval: 5m
       start_interval: 30s
       start_period: 5m
     command: >-
-      postgres -c shared_preload_libraries=vectors.so -c 'search_path="$$user", public, vectors' -c logging_collector=on -c max_wal_size=2GB -c shared_buffers=512MB -c wal_compression=on
+      postgres -c shared_preload_libraries=vectors.so
+               -c 'search_path="$$user", public, vectors'
+               -c logging_collector=on
+               -c max_wal_size=2GB
+               -c shared_buffers=512MB
+               -c wal_compression=on
     restart: always
+    networks:
+      - ldap_my_custom_network
 
   immich-prometheus:
     container_name: immich_prometheus
@@ -72,7 +87,13 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
+    networks:
+      - ldap_my_custom_network
 
 volumes:
   model-cache:
   prometheus-data:
+
+networks:
+  ldap_my_custom_network:
+    external: true
