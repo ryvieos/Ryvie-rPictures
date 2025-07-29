@@ -44,7 +44,7 @@ export class UserAdminController {
     private logger: LoggingRepository,
   ) {
     this.ldapClient = ldap.createClient({
-      url: 'ldap://172.20.0.1:389'
+      url: 'ldap://openldap:1389'
     });
   }
 
