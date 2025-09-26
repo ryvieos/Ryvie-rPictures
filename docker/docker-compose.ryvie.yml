@@ -90,8 +90,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      # Déplace le fichier de config hors repo
-      - /data/config/rpictures/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - /data/rpictures/prometheus-data:/prometheus
     networks:
       - ldap_my_custom_network
