@@ -1,0 +1,7 @@
+manifestVersion: 1
+id: rpictures
+category: storage
+name: rPictures
+version: "0.0.1"
+port: 2283
+
