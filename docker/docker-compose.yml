@@ -11,7 +11,7 @@ name: rpictures
 
 services:
   rpictures-server:
-    container_name: rpictures-server
+    container_name: app-rpictures-server
     image: julescloud/rpictures-server:v2.0.0
     # extends:
     #   file: hwaccel.transcoding.yml
@@ -35,7 +35,7 @@ services:
       - ldap_my_custom_network
 
   rpictures-machine-learning:
-    container_name: rpictures-machine-learning
+    container_name: app-rpictures-machine-learning
     # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
     image: julescloud/rpictures-machine-learning:v2.0.0
@@ -51,14 +51,14 @@ services:
       disable: false
 
   redis:
-    container_name: rpictures-redis
+    container_name: app-rpictures-redis
     image: docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
     healthcheck:
       test: redis-cli ping || exit 1
     restart: unless-stopped
 
   database:
-    container_name: rpictures-postgres
+    container_name: app-rpictures-postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
