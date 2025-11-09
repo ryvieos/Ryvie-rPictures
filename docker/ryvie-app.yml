@@ -1,0 +1,6 @@
+manifestVersion: 1
+id: rpictures
+category: storage
+name: rpictures
+version: "2.0.0"
+port: 3013
