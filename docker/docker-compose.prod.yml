@@ -11,7 +11,7 @@ name: rpictures-prod
 
 services:
   rpictures-server:
-    container_name: rpictures-server
+    container_name: app-rpictures-server
     image: rpictures-server:latest
     # extends:
     #   file: hwaccel.transcoding.yml
@@ -37,7 +37,7 @@ services:
       - ldap_my_custom_network
 
   rpictures-machine-learning:
-    container_name: rpictures-machinelearning
+    container_name: app-rpictures-machinelearning
     image: rpictures-machine-learning:latest
     # extends:
     #   file: hwaccel.ml.yml
@@ -58,14 +58,14 @@ services:
       disable: false
 
   redis:
-    container_name: rpictures-redis
+    container_name: app-rpictures-redis
     image: docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
 
   database:
-    container_name: rpictures-postgres
+    container_name: app-rpictures-postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     env_file:
       - .env
@@ -83,7 +83,7 @@ services:
 
   # set IMMICH_TELEMETRY_INCLUDE=all in .env to enable metrics
   rpictures-prometheus:
-    container_name: rpictures-prometheus
+    container_name: app-rpictures-prometheus
     ports:
       - 9090:9090
     image: prom/prometheus@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
