@@ -1,0 +1,76 @@
+<script lang="ts">
+  import FormatMessage from '$lib/elements/FormatMessage.svelte';
+  import { serverConfig } from '$lib/stores/server-config.store';
+  import { handleError } from '$lib/utils/handle-error';
+  import { deleteUserAdmin, type UserAdminResponseDto, type UserResponseDto } from '@immich/sdk';
+  import { Alert, Checkbox, ConfirmModal, Field, Input, Label, Text } from '@immich/ui';
+  import { t } from 'svelte-i18n';
+
+  type Props = {
+    user: UserResponseDto;
+    onClose: (user?: UserAdminResponseDto) => void;
+  };
+
+  let { user, onClose }: Props = $props();
+
+  let force = $state(false);
+  let email = $state('');
+  let disabled = $derived(force && email !== user.email);
+
+  const handleClose = async (confirmed: boolean) => {
+    if (!confirmed) {
+      onClose();
+      return;
+    }
+
+    try {
+      const result = await deleteUserAdmin({ id: user.id, userAdminDeleteDto: { force } });
+      onClose(result);
+    } catch (error) {
+      handleError(error, $t('errors.unable_to_delete_user'));
+    }
+  };
+</script>
+
+<ConfirmModal
+  title={$t('delete_user')}
+  confirmText={force ? $t('permanently_delete') : $t('delete')}
+  onClose={handleClose}
+  {disabled}
+>
+  {#snippet promptSnippet()}
+    <div class="flex flex-col gap-4">
+      <Text>
+        {#if force}
+          <FormatMessage key="admin.user_delete_immediately" values={{ user: user.name }}>
+            {#snippet children({ message })}
+              <b>{message}</b>
+            {/snippet}
+          </FormatMessage>
+        {:else}
+          <FormatMessage
+            key="admin.user_delete_delay"
+            values={{ user: user.name, delay: $serverConfig.userDeleteDelay }}
+          >
+            {#snippet children({ message })}
+              <b>{message}</b>
+            {/snippet}
+          </FormatMessage>
+        {/if}
+      </Text>
+
+      <div class="flex items-center gap-2">
+        <Checkbox id="queue-user-deletion-checkbox" color="secondary" bind:checked={force} />
+        <Label label={$t('admin.user_delete_immediately_checkbox')} for="queue-user-deletion-checkbox" />
+      </div>
+
+      {#if force}
+        <Alert color="danger" icon={false}>{$t('admin.force_delete_user_warning')}</Alert>
+
+        <Field label={$t('admin.confirm_email_below', { values: { email: user.email } })}>
+          <Input bind:value={email} />
+        </Field>
+      {/if}
+    </div>
+  {/snippet}
+</ConfirmModal>

@@ -1,0 +1,23 @@
+{
+  "about": "abaot",
+  "account": "Akaont",
+  "account_settings": "Seting blo Akaont",
+  "acknowledge": "Akcept",
+  "active": "Stap Mekem",
+  "activity": "Wanem hemi Mekem",
+  "activity_changed": "WAnem hemi Mekem hemi",
+  "add": "Ad",
+  "add_a_description": "Putem Description blo hem",
+  "add_a_location": "Putem place blo hem",
+  "add_a_name": "Putem nam blo hem",
+  "add_a_title": "Putem wan name blo hem",
+  "add_exclusion_pattern": "Putem wan paten wae hemi karem aot",
+  "add_import_path": "Putem wan pat blo import",
+  "add_location": "Putem wan place blo hem",
+  "add_more_users": "Putem mor man",
+  "readonly_mode_enabled": "Mod blo yu no save janjem i on",
+  "reassigned_assets_to_new_person": "Janjem{count, plural, one {# asset} other {# assets}} blo nu man",
+  "reassing_hint": "janjem ol sumtin yu bin joos i go blo wan man",
+  "recent-albums": "album i no old tu mas",
+  "recent_searches": "lukabout wea i no old tu mas"
+}
