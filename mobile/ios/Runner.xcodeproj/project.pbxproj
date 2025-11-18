@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -133,11 +133,15 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B231F52D2E93A44A00BC45D1 /* Core */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = Core;
 			sourceTree = "<group>";
 		};
 		B2CF7F8C2DDE4EBB00744BF6 /* Sync */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = Sync;
 			sourceTree = "<group>";
 		};
@@ -526,13 +530,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -562,13 +562,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -719,7 +715,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/RunnerProfile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development: Jules Maisonnave (9P36PLYDNG)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_BITCODE = NO;
@@ -729,9 +725,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.121.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures;
-				PRODUCT_NAME = "Immich-Profile";
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures;
+				PRODUCT_NAME = "rPictures-Profile";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -865,7 +861,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_BITCODE = NO;
@@ -875,9 +871,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.121.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures;
-				PRODUCT_NAME = "Immich-Debug";
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures;
+				PRODUCT_NAME = "rPictures-Debug";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -895,7 +891,7 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_BITCODE = NO;
@@ -905,9 +901,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.121.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures;
-				PRODUCT_NAME = Immich;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures;
+				PRODUCT_NAME = rPictures;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -929,7 +925,7 @@
 				CODE_SIGN_ENTITLEMENTS = WidgetExtension/WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -947,7 +943,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.WidgetExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.widgetextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -972,7 +968,7 @@
 				CODE_SIGN_ENTITLEMENTS = WidgetExtension/WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -989,7 +985,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.WidgetExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.widgetextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1012,7 +1008,7 @@
 				CODE_SIGN_ENTITLEMENTS = WidgetExtension/WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1029,7 +1025,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.WidgetExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.widgetextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1051,7 +1047,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1070,7 +1066,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.shareextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1095,7 +1091,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1113,7 +1109,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.shareextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1136,7 +1132,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 233;
+				CURRENT_PROJECT_VERSION = 1;
 				CUSTOM_GROUP_ID = group.app.immich.share;
 				DEVELOPMENT_TEAM = GW9M6A3925;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1154,7 +1150,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.rpictures.ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryvie.julesmaison.rpictures.shareextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
