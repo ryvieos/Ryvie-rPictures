@@ -135,7 +135,7 @@ class AlbumInfoCard extends HookConsumerWidget {
                     child: const Image(
                       width: double.infinity,
                       height: double.infinity,
-                      image: AssetImage('assets/immich-logo.png'),
+                      image: AssetImage('assets/rpictures-logo.png'),
                       fit: BoxFit.cover,
                     ),
                   ),

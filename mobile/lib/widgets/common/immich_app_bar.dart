@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:immich_mobile/extensions/build_context_extensions.dart';
 import 'package:immich_mobile/models/backup/backup_state.model.dart';
@@ -131,11 +130,21 @@ class ImmichAppBar extends ConsumerWidget implements PreferredSizeWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 3.0),
-                child: SvgPicture.asset(
-                  context.isDarkTheme ? 'assets/immich-logo-inline-dark.svg' : 'assets/immich-logo-inline-light.svg',
+                child: Image.asset(
+                  'assets/rpictures-logo.png',
                   height: 40,
                 ),
               ),
+              const SizedBox(width: 12),
+              Text(
+                'rPictures',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: context.primaryColor,
+                ),
+              ),
+              const SizedBox(width: 8),
               const Tooltip(
                 triggerMode: TooltipTriggerMode.tap,
                 showDuration: Duration(seconds: 4),

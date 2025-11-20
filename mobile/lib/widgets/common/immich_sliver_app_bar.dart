@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:immich_mobile/domain/models/setting.model.dart';
 import 'package:immich_mobile/extensions/build_context_extensions.dart';
@@ -95,17 +94,21 @@ class _ImmichLogoWithText extends StatelessWidget {
       builder: (BuildContext context) {
         return Row(
           children: [
-            Builder(
-              builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: SvgPicture.asset(
-                    'assets/rpictures-logo.svg',
-                    height: 40,
-                    colorFilter: null,
-                  ),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Image.asset(
+                'assets/rpictures-logo.png',
+                height: 40,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'rPictures',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: context.primaryColor,
+              ),
             ),
           ],
         );
