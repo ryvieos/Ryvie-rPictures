@@ -61,9 +61,9 @@ export const FutoLayout = ({ children, preview }: FutoLayoutProps) => (
           <Section className="my-6 p-12 border border-red-400 rounded-[50px] bg-gray-50">
             <Section className="flex justify-center mb-12">
               <Img
-                src="https://immich.app/img/immich-logo-inline-light.png"
+                src="https://rpictures.app/rpictures-logo.png"
                 className="h-12 antialiased rounded-none"
-                alt="Immich"
+                alt="rPictures"
               />
             </Section>
 
