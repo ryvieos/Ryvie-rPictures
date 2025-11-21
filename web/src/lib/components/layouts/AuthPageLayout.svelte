@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { Card, CardBody, CardHeader, Heading, immichLogo, Logo, VStack } from '@immich/ui';
-  import type { Snippet } from 'svelte';
+  import { Card, CardBody, CardHeader, Heading, VStack } from '@immich/ui';
+  import RPicturesLogo from '$lib/components/rpictures-logo.svelte';
+  const rpicturesLogo = '/rpictures-logo.png';
   interface Props {
     title?: string;
     children?: Snippet;
@@ -13,7 +14,7 @@
 <section class="min-w-dvw flex min-h-dvh items-center justify-center relative">
   <div class="absolute -z-10 w-full h-full flex place-items-center place-content-center">
     <img
-      src={immichLogo}
+      src={rpicturesLogo}
       class="max-w-(--breakpoint-md) mx-auto h-full mb-2 antialiased overflow-hidden"
       alt="rPictures logo"
     />
@@ -26,7 +27,7 @@
     {#if withHeader}
       <CardHeader class="mt-6">
         <VStack>
-          <Logo variant="icon" size="giant" />
+          <RPicturesLogo variant="icon" size="giant" />
           <Heading size="large" class="font-semibold" color="primary" tag="h1">{title}</Heading>
         </VStack>
       </CardHeader>

@@ -72,9 +72,9 @@ const config = {
       },
       navbar: {
         logo: {
-          alt: 'rPictures Logo',
-          src: 'img/rpictures-logo.png',
-          srcDark: 'img/rpictures-logo.png',
+          alt: 'Immich Logo',
+          src: 'img/immich-logo-inline-light.png',
+          srcDark: 'img/immich-logo-inline-dark.png',
           className: 'rounded-none',
         },
         items: [

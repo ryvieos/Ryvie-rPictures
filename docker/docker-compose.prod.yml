@@ -7,12 +7,12 @@
 #
 # The compose file on main may not be compatible with the latest release.
 
-name: rpictures-prod
+name: immich-prod
 
 services:
-  rpictures-server:
-    container_name: app-rpictures-server
-    image: rpictures-server:latest
+  immich-server:
+    container_name: immich_server
+    image: immich-server:latest
     # extends:
     #   file: hwaccel.transcoding.yml
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -25,7 +25,7 @@ services:
     env_file:
       - .env
     ports:
-      - 3013:2283
+      - 2283:2283
     depends_on:
       - redis
       - database
@@ -36,9 +36,9 @@ services:
       - default
       - ldap_my_custom_network
 
-  rpictures-machine-learning:
-    container_name: app-rpictures-machinelearning
-    image: rpictures-machine-learning:latest
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: immich-machine-learning:latest
     # extends:
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference
@@ -58,14 +58,14 @@ services:
       disable: false
 
   redis:
-    container_name: app-rpictures-redis
+    container_name: immich_redis
     image: docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
 
   database:
-    container_name: app-rpictures-postgres
+    container_name: immich_postgres
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     env_file:
       - .env
@@ -82,8 +82,8 @@ services:
     restart: always
 
   # set IMMICH_TELEMETRY_INCLUDE=all in .env to enable metrics
-  rpictures-prometheus:
-    container_name: app-rpictures-prometheus
+  immich-prometheus:
+    container_name: immich_prometheus
     ports:
       - 9090:9090
     image: prom/prometheus@sha256:49214755b6153f90a597adcbff0252cc61069f8ab69ce8411285cd4a560e8038
@@ -91,9 +91,21 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
 
+  # first login uses admin/admin
+  # add data source for http://immich-prometheus:9090 to get started
+  immich-grafana:
+    container_name: immich_grafana
+    command: ['./run.sh', '-disable-reporting']
+    ports:
+      - 3000:3000
+    image: grafana/grafana:12.2.1-ubuntu@sha256:797530c642f7b41ba7848c44cfda5e361ef1f3391a98bed1e5d448c472b6826a
+    volumes:
+      - grafana-data:/var/lib/grafana
+
 volumes:
   model-cache:
   prometheus-data:
+  grafana-data:
 
 networks:
   ldap_my_custom_network:

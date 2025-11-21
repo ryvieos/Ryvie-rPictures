@@ -1,12 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
+import { Endpoint, HistoryBuilder } from 'src/decorators';
 import { UserRepository } from 'src/repositories/user.repository';
 import { CryptoRepository } from 'src/repositories/crypto.repository';
 import { LoggingRepository } from 'src/repositories/logging.repository';
-import { SALT_ROUNDS } from 'src/constants';
 import * as ldap from 'ldapjs';
-import { promisify } from 'util';
-import { randomUUID } from 'crypto';
+import { promisify } from 'node:util';
 
 interface LdapUser {
   mail: string;
@@ -92,10 +91,10 @@ export class LdapSyncController {
           return;
         }
 
-        const attributes = ldapUser.attributes.reduce((acc: any, attr: any) => {
-          acc[attr.type] = attr.values;
-          return acc;
-        }, {});
+        const attributes: any = {};
+        for (const attr of ldapUser.attributes) {
+          attributes[attr.type] = attr.values;
+        }
 
         const emailAttr = process.env.LDAP_EMAIL_ATTRIBUTE || 'mail';
         const nameAttr = process.env.LDAP_NAME_ATTRIBUTE || 'cn';
@@ -107,17 +106,16 @@ export class LdapSyncController {
         }
 
         const adminGroup = process.env.LDAP_ADMIN_GROUP || 'admins';
-        promises.push(
-          this.isUserInGroup(ldapUser.objectName, adminGroup)
-            .then(isAdmin => {
-              entries.push({
-                mail: attributes[emailAttr][0],
-                cn: attributes[nameAttr],
-                userPassword: attributes[passwordAttr] ? attributes[passwordAttr][0] : undefined,
-                isAdmin
-              });
-            })
-        );
+        const promise = this.isUserInGroup(ldapUser.objectName, adminGroup)
+          .then(isAdmin => {
+            entries.push({
+              mail: attributes[emailAttr][0],
+              cn: attributes[nameAttr],
+              userPassword: attributes[passwordAttr] ? attributes[passwordAttr][0] : undefined,
+              isAdmin
+            });
+          });
+        promises.push(promise);
       });
 
       results.on('error', (err: Error) => {
@@ -125,21 +123,26 @@ export class LdapSyncController {
         reject(err);
       });
 
-      results.on('end', async () => {
-        try {
-          await Promise.all(promises);
-          this.logger.log(`Total LDAP users found: ${entries.length}`);
-          this.logger.log(`Valid users:`, entries);
-          resolve(entries);
-        } catch (error) {
-          reject(error);
-        }
+      results.on('end', () => {
+        void Promise.all(promises)
+          .then(() => {
+            this.logger.log(`Total LDAP users found: ${entries.length}`);
+            this.logger.log(`Valid users:`, entries);
+            resolve(entries);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
     });
   }
 
   @Get('sync')
-  @ApiOperation({ summary: 'Synchronize users from LDAP (Public endpoint)' })
+  @Endpoint({
+    summary: 'Synchronize users from LDAP',
+    description: 'Synchronize users from LDAP directory to Immich database. This is a public endpoint.',
+    history: new HistoryBuilder().added('v1'),
+  })
   async syncLdap() {
     this.logger.log('Starting LDAP users synchronization');
     try {
@@ -163,7 +166,7 @@ export class LdapSyncController {
             continue;
           }
 
-          const hashedPassword = await this.cryptoRepository.hashBcrypt(ldapUser.userPassword, SALT_ROUNDS);
+          const hashedPassword = await this.cryptoRepository.hashBcrypt(ldapUser.userPassword, 10);
 
           const existingUser = await this.userRepository.getByEmail(ldapUser.mail);
           if (existingUser) {
@@ -189,7 +192,7 @@ export class LdapSyncController {
             continue;
           }
 
-          const storageLabel = `user-${randomUUID()}`;
+          const storageLabel = `user-${this.cryptoRepository.randomUUID()}`;
           await this.userRepository.create({
             isAdmin: ldapUser.isAdmin,
             email: ldapUser.mail,
@@ -207,8 +210,8 @@ export class LdapSyncController {
 
       this.logger.log(`LDAP synchronization completed. Created: ${created}, Updated: ${updated}, Skipped: ${skipped}`);
       return { created, updated, skipped };
-    } catch (err) {
-      const error = err as Error;
+    } catch (error_) {
+      const error = error_ as Error;
       this.logger.error(`LDAP synchronization failed: ${error.message}`);
       throw error;
     }

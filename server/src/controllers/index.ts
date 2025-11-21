@@ -12,6 +12,7 @@ import { FaceController } from 'src/controllers/face.controller';
 import { JobController } from 'src/controllers/job.controller';
 import { LdapSyncController } from 'src/controllers/ldap-sync.controller';
 import { LibraryController } from 'src/controllers/library.controller';
+import { MaintenanceController } from 'src/controllers/maintenance.controller';
 import { MapController } from 'src/controllers/map.controller';
 import { MemoryController } from 'src/controllers/memory.controller';
 import { NotificationAdminController } from 'src/controllers/notification-admin.controller';
@@ -19,6 +20,7 @@ import { NotificationController } from 'src/controllers/notification.controller'
 import { OAuthController } from 'src/controllers/oauth.controller';
 import { PartnerController } from 'src/controllers/partner.controller';
 import { PersonController } from 'src/controllers/person.controller';
+import { PluginController } from 'src/controllers/plugin.controller';
 import { SearchController } from 'src/controllers/search.controller';
 import { ServerController } from 'src/controllers/server.controller';
 import { SessionController } from 'src/controllers/session.controller';
@@ -33,6 +35,7 @@ import { TrashController } from 'src/controllers/trash.controller';
 import { UserAdminController } from 'src/controllers/user-admin.controller';
 import { UserController } from 'src/controllers/user.controller';
 import { ViewController } from 'src/controllers/view.controller';
+import { WorkflowController } from 'src/controllers/workflow.controller';
 
 export const controllers = [
   ApiKeyController,
@@ -49,6 +52,7 @@ export const controllers = [
   JobController,
   LdapSyncController,
   LibraryController,
+  MaintenanceController,
   MapController,
   MemoryController,
   NotificationController,
@@ -56,6 +60,7 @@ export const controllers = [
   OAuthController,
   PartnerController,
   PersonController,
+  PluginController,
   SearchController,
   ServerController,
   SessionController,
@@ -70,4 +75,5 @@ export const controllers = [
   UserAdminController,
   UserController,
   ViewController,
+  WorkflowController,
 ];

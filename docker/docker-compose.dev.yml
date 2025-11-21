@@ -41,6 +41,7 @@ services:
       - app-node_modules:/usr/src/app/node_modules
       - sveltekit:/usr/src/app/web/.svelte-kit
       - coverage:/usr/src/app/web/coverage
+      - ../plugins:/build/corePlugin
     env_file:
       - .env
     environment:
@@ -72,6 +73,9 @@ services:
         condition: service_started
     healthcheck:
       disable: false
+    networks:
+      - default
+      - ldap_my_custom_network
 
   immich-web:
     container_name: immich_web
@@ -189,3 +193,7 @@ volumes:
   app-node_modules:
   sveltekit:
   coverage:
+
+networks:
+  ldap_my_custom_network:
+    external: true
