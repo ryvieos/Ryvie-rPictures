@@ -1,133 +1,252 @@
 <p align="center"> 
   <br/>
   <a href="https://opensource.org/license/agpl-v3"><img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg?color=3F51B5&style=for-the-badge&label=License&logoColor=000000&labelColor=ececec" alt="License: AGPLv3"></a>
-  <a href="https://discord.immich.app">
-    <img src="https://img.shields.io/discord/979116623879368755.svg?label=Discord&logo=Discord&style=for-the-badge&logoColor=000000&labelColor=ececec" alt="Discord"/>
-  </a>
   <br/>
   <br/>
 </p>
 
 <p align="center">
-<img src="design/immich-logo-stacked-light.svg" width="300" title="Login With Custom URL">
-</p>
-<h3 align="center">High performance self-hosted photo and video management solution</h3>
-<br/>
-<a href="https://immich.app">
-<img src="design/immich-screenshots.png" title="Main Screenshot">
-</a>
-<br/>
-
-<p align="center">
-  <a href="readme_i18n/README_ca_ES.md">Català</a>
-  <a href="readme_i18n/README_es_ES.md">Español</a>
-  <a href="readme_i18n/README_fr_FR.md">Français</a>
-  <a href="readme_i18n/README_it_IT.md">Italiano</a>
-  <a href="readme_i18n/README_ja_JP.md">日本語</a>
-  <a href="readme_i18n/README_ko_KR.md">한국어</a>
-  <a href="readme_i18n/README_de_DE.md">Deutsch</a>
-  <a href="readme_i18n/README_nl_NL.md">Nederlands</a>
-  <a href="readme_i18n/README_tr_TR.md">Türkçe</a>
-  <a href="readme_i18n/README_zh_CN.md">简体中文</a>
-  <a href="readme_i18n/README_zh_TW.md">正體中文</a>
-  <a href="readme_i18n/README_uk_UA.md">Українська</a>
-  <a href="readme_i18n/README_ru_RU.md">Русский</a>
-  <a href="readme_i18n/README_pt_BR.md">Português Brasileiro</a>
-  <a href="readme_i18n/README_sv_SE.md">Svenska</a>
-  <a href="readme_i18n/README_ar_JO.md">العربية</a>
-  <a href="readme_i18n/README_vi_VN.md">Tiếng Việt</a>
-  <a href="readme_i18n/README_th_TH.md">ภาษาไทย</a>
+  <img src="./assets/rpictures-logo.png" width="300" alt="Logo rPictures">
 </p>
 
+<h3 align="center">Galerie photo et vidéo auto‑hébergée pour votre cloud personnel</h3>
 
-> [!WARNING]
-> ⚠️ Always follow [3-2-1](https://www.backblaze.com/blog/the-3-2-1-backup-strategy/) backup plan for your precious photos and videos!
-> 
- 
+<br/>
 
-> [!NOTE]
-> You can find the main documentation, including installation guides, at https://immich.app/.
+---
 
-## Links
+## Présentation
 
-- [Documentation](https://docs.immich.app/)
-- [About](https://docs.immich.app/overview/introduction)
-- [Installation](https://docs.immich.app/install/requirements)
-- [Roadmap](https://immich.app/roadmap)
-- [Demo](#demo)
-- [Features](#features)
-- [Translations](https://docs.immich.app/developer/translations)
-- [Contributing](https://docs.immich.app/overview/support-the-project)
+**rPictures** est une application de sauvegarde, d’organisation et de consultation de photos/vidéos, pensée pour être **auto‑hébergée** sur votre propre serveur (chez vous ou sur un VPS), avec une expérience moderne proche de Google Photos, mais en gardant **le contrôle total sur vos données**.
 
-## Demo
+rPictures est utilisé dans le cadre du projet **Ryvie**, un cloud personnel à la maison, et s’intègre dans cet écosystème pour fournir une brique « Photos/Vidéos » cohérente avec le reste des services (fichiers, notes, etc.).
 
-Access the demo [here](https://demo.immich.app). For the mobile app, you can use `https://demo.immich.app` for the `Server Endpoint URL`.
+rPictures est un **fork** du projet open source [Immich](https://github.com/immich-app/immich). Il reprend ses fondations techniques et fonctionnelles, tout en étant adapté et intégré à l’environnement Ryvie.
 
-### Login credentials
+---
 
-| Email           | Password |
-| --------------- | -------- |
-| demo@immich.app | demo     |
+## Pourquoi rPictures ?
 
-## Features
+- **Auto‑hébergé à la maison**  
+  Déployez rPictures sur votre propre serveur (NUC, mini‑PC, NAS, VPS…) et gardez vos souvenirs près de vous.
 
-| Features                                     | Mobile | Web |
-| :------------------------------------------- | ------ | --- |
-| Upload and view videos and photos            | Yes    | Yes |
-| Auto backup when the app is opened           | Yes    | N/A |
-| Prevent duplication of assets                | Yes    | Yes |
-| Selective album(s) for backup                | Yes    | N/A |
-| Download photos and videos to local device   | Yes    | Yes |
-| Multi-user support                           | Yes    | Yes |
-| Album and Shared albums                      | Yes    | Yes |
-| Scrubbable/draggable scrollbar               | Yes    | Yes |
-| Support raw formats                          | Yes    | Yes |
-| Metadata view (EXIF, map)                    | Yes    | Yes |
-| Search by metadata, objects, faces, and CLIP | Yes    | Yes |
-| Administrative functions (user management)   | No     | Yes |
-| Background backup                            | Yes    | N/A |
-| Virtual scroll                               | Yes    | Yes |
-| OAuth support                                | Yes    | Yes |
-| API Keys                                     | N/A    | Yes |
-| LivePhoto/MotionPhoto backup and playback    | Yes    | Yes |
-| Support 360 degree image display             | No     | Yes |
-| User-defined storage structure               | Yes    | Yes |
-| Public Sharing                               | Yes    | Yes |
-| Archive and Favorites                        | Yes    | Yes |
-| Global Map                                   | Yes    | Yes |
-| Partner Sharing                              | Yes    | Yes |
-| Facial recognition and clustering            | Yes    | Yes |
-| Memories (x years ago)                       | Yes    | Yes |
-| Offline support                              | Yes    | No  |
-| Read-only gallery                            | Yes    | Yes |
-| Stacked Photos                               | Yes    | Yes |
-| Tags                                         | No     | Yes |
-| Folder View                                  | Yes    | Yes |
+- **Contrôle et confidentialité des données**  
+  Pas de solution SaaS opaque : vos photos et vidéos restent sous votre contrôle, chiffrées et stockées là où vous le décidez.
 
-## Translations
+- **Expérience moderne**  
+  Interface moderne, recherche avancée, albums partagés, sauvegarde automatique depuis le mobile : une expérience proche des grandes plateformes, mais sans les inconvénients.
 
-Read more about translations [here](https://docs.immich.app/developer/translations).
+- **Intégré à Ryvie**  
+  Conçu pour s’intégrer dans un **écosystème de cloud personnel** : authentification, supervision, sauvegardes et autres services peuvent être pilotés dans Ryvie.
 
-<a href="https://hosted.weblate.org/engage/immich/">
-<img src="https://hosted.weblate.org/widget/immich/immich/multi-auto.svg" alt="Translation status" />
+- **Basé sur un projet mature**  
+  Repose sur une base technique robuste issue du projet original Immich, bénéficiant de son expérience et de sa communauté.
+
+---
+
+## Liens
+
+- **Code source** : https://github.com/maisonnavejul/rPictures  
+- **Site Ryvie (cloud personnel)** : https://ryvie.fr  
+- **Documentation** : à venir (se référer au dépôt GitHub)  
+- **Suivi des issues / demandes de fonctionnalités** : https://github.com/maisonnavejul/rPictures/issues  
+- **Roadmap** : à venir  
+- **Démo** : voir la section ci‑dessous
+
+---
+
+## Démo
+
+Une démo publique sera **bientôt disponible**.
+
+En attendant, vous pouvez tester rPictures en local ou sur votre propre serveur en suivant la section **Installation** et **Déploiement avec Docker Compose** ci‑dessous.
+
+---
+
+## Fonctionnalités
+
+La liste ci‑dessous reprend les principales fonctionnalités disponibles dans rPictures, côté **mobile** et **web** :
+
+| Fonctionnalité                                      | Mobile | Web |
+| :-------------------------------------------------- | :----: | :--: |
+| Upload et visualisation de photos et vidéos         |  Oui   | Oui |
+| Sauvegarde automatique à l’ouverture de l’app      |  Oui   | N/A |
+| Prévention de la duplication des médias            |  Oui   | Oui |
+| Sélection d’albums pour la sauvegarde              |  Oui   | N/A |
+| Téléchargement vers l’appareil local               |  Oui   | Oui |
+| Support multi‑utilisateurs                          |  Oui   | Oui |
+| Albums et albums partagés                          |  Oui   | Oui |
+| Barre de défilement rapide / scrubbable            |  Oui   | Oui |
+| Support de formats RAW                             |  Oui   | Oui |
+| Vue métadonnées (EXIF, carte, etc.)               |  Oui   | Oui |
+| Recherche par métadonnées, objets, visages, CLIP   |  Oui   | Oui |
+| Fonctions d’administration (gestion des comptes)   |  Non   | Oui |
+| Sauvegarde en arrière‑plan                         |  Oui   | N/A |
+| Virtual scroll (grandes galeries fluides)          |  Oui   | Oui |
+| Support OAuth                                      |  Oui   | Oui |
+| Clés API                                           |  N/A   | Oui |
+| Sauvegarde/lecture LivePhoto / MotionPhoto         |  Oui   | Oui |
+| Support des images 360°                            |  Non   | Oui |
+| Structure de stockage définie par l’utilisateur    |  Oui   | Oui |
+| Partage public                                     |  Oui   | Oui |
+| Archivage et favoris                               |  Oui   | Oui |
+| Carte globale                                      |  Oui   | Oui |
+| Partage partenaire                                 |  Oui   | Oui |
+| Reconnaissance faciale et regroupement             |  Oui   | Oui |
+| Souvenirs (x années en arrière)                    |  Oui   | Oui |
+| Support hors‑ligne                                 |  Oui   | Non |
+| Galerie en lecture seule                           |  Oui   | Oui |
+| Photos empilées                                    |  Oui   | Oui |
+| Tags / étiquettes                                  |  Non   | Oui |
+| Vue par dossiers                                   |  Oui   | Oui |
+
+> Remarque : certaines fonctionnalités peuvent nécessiter des services supplémentaires (moteur de recherche, service de machine learning, etc.), généralement fournis via Docker.
+
+---
+
+## Stack technique (vue d’ensemble)
+
+rPictures est composé de plusieurs services, typiquement déployés via **Docker Compose** :
+
+- **Services applicatifs**  
+  Services backend et web pour gérer les comptes utilisateurs, les albums, l’API, la synchronisation, etc.
+
+- **Base de données**  
+  Base de données relationnelle (par exemple PostgreSQL) pour les métadonnées et la gestion des utilisateurs.
+
+- **Cache / file de messages**  
+  Service de cache / file (par exemple Redis) pour la gestion des jobs, des sessions et de certaines opérations asynchrones.
+
+- **Moteur de recherche & ML**  
+  Services annexes pour la recherche par texte / similarité, la détection de visages, d’objets, etc.
+
+- **Applications clientes**  
+  - Application web rPictures  
+  - Applications mobiles (Android / iOS) basées sur le client compatible avec le backend rPictures
+
+Les détails précis de la stack et des services déployés sont décrits dans les fichiers de configuration Docker du dépôt (dossier `docker/`).
+
+---
+
+## Installation
+
+### Prérequis
+
+- Un serveur Linux (ou machine locale) avec :
+  - Docker et le plugin Docker Compose
+  - Une connexion réseau stable
+  - Un espace disque suffisant pour stocker vos photos/vidéos
+- Un nom de domaine (optionnel mais recommandé) si vous exposez rPictures sur Internet
+- (Optionnel) Intégration avec Ryvie pour l’authentification, la supervision et les sauvegardes
+
+### Récupérer le code
+
+```bash
+git clone https://github.com/maisonnavejul/rPictures.git
+cd rPictures
+```
+
+### Déploiement rapide avec Docker Compose
+
+Un exemple standard consiste à utiliser les fichiers fournis dans le dossier `docker/` :
+
+```bash
+# Depuis la racine du dépôt
+docker compose -f docker/docker-compose.yml up -d
+```
+
+Cette commande :
+
+- Télécharge les images nécessaires
+- Démarre les services rPictures (API, web, services techniques…)
+- Crée les volumes nécessaires pour les données et les métadonnées
+
+> Pensez à vérifier et adapter le fichier `docker-compose.yml` (ports exposés, chemins de volumes, etc.) avant un déploiement en production.
+
+### Première connexion
+
+1. Une fois les conteneurs démarrés, accédez à l’interface web :  
+   `http://votre‑serveur:PORT` (PORT selon votre configuration Docker, par exemple `2283` ou autre valeur définie).
+2. Créez un compte administrateur si nécessaire (ou utilisez l’utilisateur initial configuré par l’application).
+3. Configurez :
+   - Vos dossiers de sauvegarde
+   - La langue de l’interface
+   - Les paramètres de reconnaissance (si activés)
+
+---
+
+## Configuration
+
+La configuration de rPictures se fait principalement via :
+
+- **Variables d’environnement**  
+  Pour les accès à la base de données, au cache, aux services de recherche, aux chemins de stockage, etc.  
+  Ces variables sont généralement définies dans :
+  - Les fichiers `docker-compose.yml`
+  - Un éventuel fichier `.env` chargé par Docker
+
+- **Volumes Docker**  
+  Pour les répertoires de stockage des originaux, des miniatures, des fichiers dérivés, etc.
+
+Points d’attention :
+
+- **Stockage** :  
+  - Définissez un volume pour les photos/vidéos, par exemple monté vers `/photos` dans le conteneur.  
+  - Assurez‑vous que ce volume est sauvegardé par vos routines de backup (NAS, disque externe, etc.).
+
+- **Sauvegardes** :  
+  - Respectez autant que possible la règle **3‑2‑1** (3 copies, 2 supports différents, 1 hors‑site) pour vos photos/vidéos.  
+  - rPictures ne remplace pas une stratégie de sauvegarde complète.
+
+- **Sécurité & accès** :  
+  - Placez rPictures derrière un reverse proxy (par exemple Traefik, Caddy, Nginx) pour gérer TLS/HTTPS.  
+  - Restreignez l’accès administratif aux utilisateurs de confiance.
+
+---
+
+## Contribution
+
+Les contributions à rPictures sont les bienvenues !
+
+- **Signaler un bug** : ouvrez une issue avec :
+  - La version de rPictures
+  - Votre configuration (Docker, OS, etc.)
+  - Les étapes pour reproduire le problème
+- **Proposer une nouvelle fonctionnalité** : créez une issue de type *feature request* en expliquant le besoin, le contexte (notamment avec Ryvie) et un exemple d’usage.
+- **Envoyer une Pull Request** :
+  - Forkez le dépôt : https://github.com/maisonnavejul/rPictures
+  - Créez une branche dédiée
+  - Ajoutez vos modifications avec des tests si possible
+  - Ouvrez une PR en décrivant clairement votre changement
+
+Avant de contribuer, consultez les éventuelles directives dans `CONTRIBUTING.md` ou la documentation du dépôt si elles existent.
+
+---
+
+## Projet original
+
+rPictures est basé sur le projet open source **Immich** :
+
+- **Projet original** : Immich – Self‑hosted photo and video management solution  
+- **Dépôt original** : https://github.com/immich-app/immich  
+
+Un grand merci à toute l’équipe et à la communauté Immich pour leur travail exceptionnel, qui sert de base solide à rPictures.
+
+---
+
+## Licence
+
+rPictures est distribué sous licence **AGPLv3** (Affero General Public License version 3), conformément au projet original.
+
+Pour plus de détails, consultez le fichier `LICENSE` à la racine du dépôt ou la page :  
+https://opensource.org/license/agpl-v3
+
+---
+
+## Auteurs & contributeurs
+
+<a href="https://github.com/maisonnavejul/rPictures/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=maisonnavejul/rPictures" width="100%" alt="Contributeurs de rPictures"/>
 </a>
 
-## Repository activity
-
-![Activities](https://repobeats.axiom.co/api/embed/9e86d9dc3ddd137161f2f6d2e758d7863b1789cb.svg "Repobeats analytics image")
-
-## Star history
-
-<a href="https://star-history.com/#immich-app/immich&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=immich-app/immich&type=date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=immich-app/immich&type=date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=immich-app/immich&type=date" width="100%" />
- </picture>
-</a>
-
-## Contributors
-
-<a href="https://github.com/immich-app/immich/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=immich-app/immich" width="100%"/>
-</a>
+Merci à toutes les personnes qui participent à faire évoluer rPictures et à construire un cloud personnel respectueux de la vie privée avec Ryvie.
