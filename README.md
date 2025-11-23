@@ -9,6 +9,7 @@
   <img src="./web/static/rpictures-logo.png" width="300" alt="Logo rPictures">
 </p>
 
+<h1 align="center">rPictures</h1>
 <h3 align="center">Galerie photo et vidéo auto‑hébergée pour votre cloud personnel</h3>
 
 <br/>
