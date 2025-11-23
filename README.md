@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="./assets/rpictures-logo.png" width="300" alt="Logo rPictures">
+  <img src="./web/static/rpictures-logo.png" width="300" alt="Logo rPictures">
 </p>
 
 <h3 align="center">Galerie photo et vidéo auto‑hébergée pour votre cloud personnel</h3>
