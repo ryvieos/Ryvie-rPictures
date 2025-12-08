@@ -40,6 +40,13 @@ class _TabShellPageState extends ConsumerState<TabShellPage> {
   }
 
   @override
+  void dispose() {
+    // Arrêter le retry loop quand l'utilisateur quitte la page
+    ref.read(serverHealthCheckProvider).stopRetryLoop();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isScreenLandscape = context.orientation == Orientation.landscape;
     final isReadonlyModeEnabled = ref.watch(readonlyModeProvider);
