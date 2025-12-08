@@ -9,6 +9,7 @@ import 'package:immich_mobile/providers/auth.provider.dart';
 import 'package:immich_mobile/providers/background_sync.provider.dart';
 import 'package:immich_mobile/providers/backup/backup.provider.dart';
 import 'package:immich_mobile/providers/backup/drift_backup.provider.dart';
+import 'package:immich_mobile/providers/connection_status.provider.dart';
 import 'package:immich_mobile/providers/gallery_permission.provider.dart';
 import 'package:immich_mobile/providers/server_info.provider.dart';
 import 'package:immich_mobile/providers/websocket.provider.dart';
@@ -33,6 +34,22 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage> {
         .read(authProvider.notifier)
         .setOpenApiServiceEndpoint()
         .then(logConnectionInfo)
+        .catchError((error, stackTrace) {
+          log.severe('❌ Erreur lors du switch d\'endpoint au démarrage', error, stackTrace);
+
+          final errorStr = error.toString();
+          if (errorStr.contains('NO_TUNNEL_CONFIG')) {
+            log.info('🔵 Affichage message NO_TUNNEL_CONFIG (SplashScreen)');
+            ref
+                .read(connectionStatusProvider.notifier)
+                .setNoTunnelConfig(
+                  'Pour accéder à votre Ryvie depuis l\'extérieur :\n\n'
+                  '1. Connectez-vous au WiFi de votre domicile\n'
+                  '2. Ouvrez rPictures\n'
+                  '3. Installez l\'application Ryvie Connect sur votre téléphone principal',
+                );
+          }
+        })
         .whenComplete(() => resumeSession());
   }
 

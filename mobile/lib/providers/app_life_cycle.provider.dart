@@ -14,6 +14,7 @@ import 'package:immich_mobile/providers/backup/backup.provider.dart';
 import 'package:immich_mobile/providers/backup/drift_backup.provider.dart';
 import 'package:immich_mobile/providers/backup/ios_background_settings.provider.dart';
 import 'package:immich_mobile/providers/backup/manual_upload.provider.dart';
+import 'package:immich_mobile/providers/connection_status.provider.dart';
 import 'package:immich_mobile/providers/gallery_permission.provider.dart';
 import 'package:immich_mobile/providers/infrastructure/platform.provider.dart';
 import 'package:immich_mobile/providers/memory.provider.dart';
@@ -74,17 +75,53 @@ class AppLifeCycleNotifier extends StateNotifier<AppLifeCycleEnum> {
   }
 
   Future<void> _performResume() async {
+    _log.info('🔄 _performResume appelé - _wasPaused: $_wasPaused');
+
     // no need to resume because app was never really paused
-    if (!_wasPaused) return;
+    if (!_wasPaused) {
+      _log.info('⏭️  Skip resume - app was never paused');
+      return;
+    }
     _wasPaused = false;
 
     final isAuthenticated = _ref.read(authProvider).isAuthenticated;
+    _log.info('🔐 isAuthenticated: $isAuthenticated');
 
     // Needs to be logged in
     if (isAuthenticated) {
       // switch endpoint if needed
-      final endpoint = await _ref.read(authProvider.notifier).setOpenApiServiceEndpoint();
-      _log.info("Using server URL: $endpoint");
+      _log.info('🌐 Appel setOpenApiServiceEndpoint...');
+      try {
+        final endpoint = await _ref.read(authProvider.notifier).setOpenApiServiceEndpoint();
+        _log.info("Using server URL: $endpoint");
+
+        if (endpoint == null) {
+          _log.warning("⚠️  Aucun endpoint disponible - connexion impossible");
+        } else {
+          // Connexion réussie
+          _ref.read(connectionStatusProvider.notifier).setConnected(endpoint);
+        }
+      } catch (error, stackTrace) {
+        _log.severe("❌ Erreur lors du switch d'endpoint", error, stackTrace);
+
+        final errorStr = error.toString();
+        _log.info('🔍 DEBUG: errorStr = $errorStr');
+
+        if (errorStr.contains('NO_TUNNEL_CONFIG')) {
+          _log.info('🔵 Affichage message NO_TUNNEL_CONFIG');
+          _ref
+              .read(connectionStatusProvider.notifier)
+              .setNoTunnelConfig(
+                'Pour accéder à votre Ryvie depuis l\'extérieur :\n\n'
+                '1. Connectez-vous au WiFi de votre domicile\n'
+                '2. Ouvrez rPictures\n'
+                '3. Installez l\'application Ryvie Connect sur votre téléphone principal',
+              );
+        } else {
+          _log.warning('⚠️  Erreur non gérée: $errorStr');
+        }
+        // L'erreur est loggée et affichée via le banner
+      }
 
       if (!Store.isBetaTimelineEnabled) {
         final permission = _ref.watch(galleryPermissionNotifier);
@@ -94,7 +131,12 @@ class AppLifeCycleNotifier extends StateNotifier<AppLifeCycleEnum> {
         }
       }
 
-      await _ref.read(serverInfoProvider.notifier).getServerVersion();
+      try {
+        await _ref.read(serverInfoProvider.notifier).getServerVersion();
+      } catch (error, stackTrace) {
+        _log.severe("❌ Impossible de contacter le serveur", error, stackTrace);
+        // L'erreur sera visible dans l'UI via le provider serverInfo
+      }
     }
 
     if (!Store.isBetaTimelineEnabled) {

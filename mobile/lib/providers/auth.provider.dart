@@ -187,6 +187,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     return Store.tryGet(StoreKey.localEndpoint);
   }
 
+  /// Sauvegarde les informations du tunnel pour la sélection intelligente d'URL
+  Future<void> saveTunnelInfo({String? tunnelHost, String? publicUrl}) async {
+    await _authService.saveTunnelInfo(tunnelHost: tunnelHost, publicUrl: publicUrl);
+  }
+
+  /// Récupère les informations du tunnel sauvegardées
+  ({String? tunnelHost, String? publicUrl}) getTunnelInfo() {
+    return _authService.getTunnelInfo();
+  }
+
   /// Returns the current server endpoint (with /api) URL from the store
   String? getServerEndpoint() {
     return Store.tryGet(StoreKey.serverEndpoint);

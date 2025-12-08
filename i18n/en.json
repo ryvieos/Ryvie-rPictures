@@ -2208,5 +2208,18 @@
   "you_dont_have_any_shared_links": "You don't have any shared links",
   "your_wifi_name": "Your Wi-Fi name",
   "zoom_image": "Zoom Image",
-  "zoom_to_bounds": "Zoom to bounds"
+  "zoom_to_bounds": "Zoom to bounds",
+  "tunnel_configuration": "Tunnel Configuration",
+  "tunnel_settings_title": "Ryvie Tunnel Settings",
+  "tunnel_settings_description": "The app automatically retrieves tunnel information from the server when connected locally. You can also configure it manually if needed.",
+  "tunnel_auto_configured": "✓ Tunnel information automatically configured from server",
+  "tunnel_host_label": "Tunnel Host",
+  "tunnel_host_hint": "e.g., 100.64.0.1",
+  "tunnel_host_helper": "IP address or hostname of the tunnel",
+  "public_url_label": "Public URL",
+  "public_url_hint": "e.g., https://your-domain.com or http://tunnel-ip:3000",
+  "public_url_helper": "Complete public URL to access the server",
+  "save_button": "Save",
+  "tunnel_info_saved": "Tunnel information saved successfully",
+  "tunnel_info_save_error": "Error saving tunnel information"
 }
