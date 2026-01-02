@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:immich_mobile/extensions/build_context_extensions.dart';
 import 'package:immich_mobile/extensions/theme_extensions.dart';
 import 'package:immich_mobile/widgets/forms/login/login_form.dart';
+import 'package:immich_mobile/widgets/common/connection_error_banner.dart';
 import 'package:immich_mobile/routing/router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -24,10 +25,15 @@ class LoginPage extends HookConsumerWidget {
     useEffect(() {
       getAppInfo();
       return null;
-    });
+    }, []);
 
     return Scaffold(
-      body: LoginForm(),
+      body: Column(
+        children: [
+          const ConnectionErrorBanner(),
+          Expanded(child: LoginForm()),
+        ],
+      ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 16.0),

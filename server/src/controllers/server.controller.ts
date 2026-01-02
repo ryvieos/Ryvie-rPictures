@@ -3,17 +3,17 @@ import { ApiNotFoundResponse, ApiTags } from '@nestjs/swagger';
 import { Endpoint, HistoryBuilder } from 'src/decorators';
 import { LicenseKeyDto, LicenseResponseDto } from 'src/dtos/license.dto';
 import {
-  ServerAboutResponseDto,
-  ServerApkLinksDto,
-  ServerConfigDto,
-  ServerFeaturesDto,
-  ServerMediaTypesResponseDto,
-  ServerPingResponse,
-  ServerStatsResponseDto,
-  ServerStorageResponseDto,
-  ServerThemeDto,
-  ServerVersionHistoryResponseDto,
-  ServerVersionResponseDto,
+    ServerAboutResponseDto,
+    ServerApkLinksDto,
+    ServerConfigDto,
+    ServerFeaturesDto,
+    ServerMediaTypesResponseDto,
+    ServerPingResponse,
+    ServerStatsResponseDto,
+    ServerStorageResponseDto,
+    ServerThemeDto,
+    ServerVersionHistoryResponseDto,
+    ServerVersionResponseDto,
 } from 'src/dtos/server.dto';
 import { VersionCheckStateResponseDto } from 'src/dtos/system-metadata.dto';
 import { ApiTag, Permission } from 'src/enum';
@@ -29,6 +29,7 @@ export class ServerController {
     private service: ServerService,
     private systemMetadataService: SystemMetadataService,
     private versionService: VersionService,
+    private ryvieService: RyvieService,
   ) {}
 
   @Get('about')
@@ -189,5 +190,15 @@ export class ServerController {
   })
   getVersionCheck(): Promise<VersionCheckStateResponseDto> {
     return this.systemMetadataService.getVersionCheckState();
+  }
+
+  @Get('ryvie-tunnel-info')
+  @Endpoint({
+    summary: 'Get Ryvie tunnel information',
+    description: 'Retrieve tunnel configuration for intelligent URL selection. Returns tunnel host, public URL, and domain information.',
+    history: new HistoryBuilder().added('v1').beta('v1').stable('v2'),
+  })
+  getRyvieTunnelInfo(): Promise<RyvieTunnelInfoDto> {
+    return this.ryvieService.getTunnelInfo();
   }
 }

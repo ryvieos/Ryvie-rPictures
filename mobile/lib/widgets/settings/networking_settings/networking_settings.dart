@@ -10,6 +10,7 @@ import 'package:immich_mobile/utils/hooks/app_settings_update_hook.dart';
 import 'package:immich_mobile/utils/url_helper.dart';
 import 'package:immich_mobile/widgets/settings/networking_settings/external_network_preference.dart';
 import 'package:immich_mobile/widgets/settings/networking_settings/local_network_preference.dart';
+import 'package:immich_mobile/widgets/settings/networking_settings/tunnel_settings.dart';
 import 'package:immich_mobile/widgets/settings/settings_switch_list_tile.dart';
 
 class NetworkingSettings extends HookConsumerWidget {
@@ -139,6 +140,14 @@ class NetworkingSettings extends HookConsumerWidget {
           child: NetworkPreferenceTitle(title: "external_network".tr().toUpperCase(), icon: Icons.dns_outlined),
         ),
         ExternalNetworkPreference(enabled: featureEnabled.value),
+        Padding(
+          padding: const EdgeInsets.only(top: 32, left: 16, bottom: 16),
+          child: NetworkPreferenceTitle(
+            title: "tunnel_configuration".tr().toUpperCase(),
+            icon: Icons.vpn_lock_outlined,
+          ),
+        ),
+        const TunnelSettings(),
       ],
     );
   }

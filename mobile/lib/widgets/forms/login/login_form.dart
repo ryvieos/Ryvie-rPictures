@@ -34,6 +34,8 @@ import 'package:immich_mobile/widgets/forms/login/login_button.dart';
 import 'package:immich_mobile/widgets/forms/login/o_auth_login_button.dart';
 import 'package:immich_mobile/widgets/forms/login/password_input.dart';
 import 'package:immich_mobile/widgets/forms/login/server_endpoint_input.dart';
+import 'package:immich_mobile/services/smart_url_selector.service.dart';
+import 'package:immich_mobile/providers/connection_status.provider.dart';
 import 'package:logging/logging.dart';
 import 'package:openapi/api.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -146,10 +148,73 @@ class LoginForm extends HookConsumerWidget {
     }
 
     useEffect(() {
-      final serverUrl = getServerUrl();
-      if (serverUrl != null) {
-        serverEndpointController.text = serverUrl;
+      // Essayer d'abord la connexion locale automatique (comme Ryvie-Desktop)
+      tryAutoConnectLocal() async {
+        log.info('🔍 Tentative de connexion automatique au serveur local...');
+
+        try {
+          // Tester si ryvie.local:3013 est accessible
+          final smartUrlSelector = SmartUrlSelectorService();
+          final result = await smartUrlSelector.selectServerUrl();
+
+          if (result.isLocal && result.url == SmartUrlSelectorService.localServerUrl) {
+            // Connexion locale disponible - se connecter automatiquement
+            log.info('✅ Serveur local détecté - Connexion automatique à ${result.url}');
+            serverEndpointController.text = result.url;
+
+            // Récupérer automatiquement les infos du tunnel en arrière-plan
+            smartUrlSelector.fetchAndSaveTunnelInfo().catchError((e) {
+              log.warning('Erreur récupération infos tunnel: $e');
+            });
+
+            // Valider automatiquement le serveur
+            await getServerAuthSettings();
+          } else {
+            // Connexion via tunnel - se connecter automatiquement
+            log.info('✅ Connexion via tunnel détectée - Utilisation de ${result.url}');
+            serverEndpointController.text = result.url;
+            await getServerAuthSettings();
+          }
+        } catch (e) {
+          // Erreur de connexion - mettre à jour le provider pour afficher le message
+          final errorStr = e.toString();
+          log.info('🔍 DEBUG Login: errorStr = $errorStr');
+
+          if (errorStr.contains('TUNNEL_UNAVAILABLE')) {
+            log.severe('❌ Tunnel inaccessible');
+            ref
+                .read(connectionStatusProvider.notifier)
+                .setTunnelUnavailable(
+                  'Impossible de se connecter à votre Ryvie.\n\n'
+                  'Vérifiez que :\n'
+                  '• Votre téléphone a accès à Internet\n'
+                  '• L\'application Ryvie Connect est ouverte sur votre téléphone principal\n\n'
+                  'Si vous êtes chez vous, reconnectez-vous au WiFi.',
+                );
+          } else if (errorStr.contains('NO_TUNNEL_CONFIG')) {
+            log.severe('❌ Pas de configuration tunnel');
+            ref
+                .read(connectionStatusProvider.notifier)
+                .setNoTunnelConfig(
+                  'Pour accéder à votre Ryvie depuis l\'extérieur :\n\n'
+                  '1. Connectez-vous au WiFi de votre domicile\n'
+                  '2. Ouvrez rPictures\n'
+                  '3. Installez l\'application Ryvie Connect sur votre téléphone principal',
+                );
+          } else {
+            log.severe('❌ Erreur de connexion: $e');
+          }
+
+          // Utiliser l'URL sauvegardée si disponible
+          final serverUrl = getServerUrl();
+          if (serverUrl != null) {
+            log.info('ℹ️  Utilisation de l\'URL sauvegardée: $serverUrl');
+            serverEndpointController.text = serverUrl;
+          }
+        }
       }
+
+      tryAutoConnectLocal();
       return null;
     }, []);
 

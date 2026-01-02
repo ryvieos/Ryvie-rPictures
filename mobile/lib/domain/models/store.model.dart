@@ -62,6 +62,8 @@ enum StoreKey<T> {
   preferredWifiName<String>._(133),
   localEndpoint<String>._(134),
   externalEndpointList<String>._(135),
+  tunnelHost<String>._(140),
+  publicUrl<String>._(141),
 
   // Video settings
   loadOriginalVideo<bool>._(136),
