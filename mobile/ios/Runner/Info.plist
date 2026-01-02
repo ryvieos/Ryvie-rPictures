@@ -107,7 +107,7 @@
 			</dict>
 		</array>
 		<key>CFBundleVersion</key>
-		<string>9</string>
+		<string>14</string>
 		<key>FLTEnableImpeller</key>
 		<true/>
 		<key>ITSAppUsesNonExemptEncryption</key>

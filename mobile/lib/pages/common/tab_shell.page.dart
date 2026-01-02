@@ -18,6 +18,8 @@ import 'package:immich_mobile/providers/search/search_input_focus.provider.dart'
 import 'package:immich_mobile/providers/tab.provider.dart';
 import 'package:immich_mobile/providers/timeline/multiselect.provider.dart';
 import 'package:immich_mobile/routing/router.dart';
+import 'package:immich_mobile/widgets/common/connection_error_banner.dart';
+import 'package:immich_mobile/providers/server_health_check.provider.dart';
 
 @RoutePage()
 class TabShellPage extends ConsumerStatefulWidget {
@@ -28,6 +30,22 @@ class TabShellPage extends ConsumerStatefulWidget {
 }
 
 class _TabShellPageState extends ConsumerState<TabShellPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Lancer un health check unique quand l'utilisateur arrive sur la page principale
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(serverHealthCheckProvider).performHealthCheck();
+    });
+  }
+
+  @override
+  void dispose() {
+    // Arrêter le retry loop quand l'utilisateur quitte la page
+    ref.read(serverHealthCheckProvider).stopRetryLoop();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isScreenLandscape = context.orientation == Orientation.landscape;
@@ -89,15 +107,22 @@ class _TabShellPageState extends ConsumerState<TabShellPage> {
           onPopInvokedWithResult: (didPop, _) => !didPop ? tabsRouter.setActiveIndex(0) : null,
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            body: isScreenLandscape
-                ? Row(
-                    children: [
-                      navigationRail(tabsRouter),
-                      const VerticalDivider(),
-                      Expanded(child: child),
-                    ],
-                  )
-                : child,
+            body: Column(
+              children: [
+                const ConnectionErrorBanner(),
+                Expanded(
+                  child: isScreenLandscape
+                      ? Row(
+                          children: [
+                            navigationRail(tabsRouter),
+                            const VerticalDivider(),
+                            Expanded(child: child),
+                          ],
+                        )
+                      : child,
+                ),
+              ],
+            ),
             bottomNavigationBar: _BottomNavigationBar(tabsRouter: tabsRouter, destinations: navigationDestinations),
           ),
         );

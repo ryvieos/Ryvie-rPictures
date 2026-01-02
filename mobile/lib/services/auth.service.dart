@@ -15,6 +15,7 @@ import 'package:immich_mobile/repositories/auth_api.repository.dart';
 import 'package:immich_mobile/services/api.service.dart';
 import 'package:immich_mobile/services/app_settings.service.dart';
 import 'package:immich_mobile/services/network.service.dart';
+import 'package:immich_mobile/services/smart_url_selector.service.dart';
 import 'package:logging/logging.dart';
 import 'package:openapi/api.dart';
 
@@ -36,6 +37,7 @@ class AuthService {
   final NetworkService _networkService;
   final BackgroundSyncManager _backgroundSyncManager;
   final AppSettingsService _appSettingsService;
+  final SmartUrlSelectorService _smartUrlSelector = SmartUrlSelectorService();
   final _log = Logger("AuthService");
 
   AuthService(
@@ -61,6 +63,39 @@ class AuthService {
     await Store.put(StoreKey.serverUrl, validUrl);
 
     return validUrl;
+  }
+
+  /// Sauvegarde les informations du tunnel pour la sélection intelligente d'URL
+  ///
+  /// [tunnelHost] - L'adresse IP ou hostname du tunnel
+  /// [publicUrl] - L'URL publique complète (optionnel)
+  Future<void> saveTunnelInfo({String? tunnelHost, String? publicUrl}) async {
+    await _smartUrlSelector.saveTunnelInfo(tunnelHost: tunnelHost, publicUrl: publicUrl);
+  }
+
+  /// Récupère les informations du tunnel sauvegardées
+  ({String? tunnelHost, String? publicUrl}) getTunnelInfo() {
+    return _smartUrlSelector.getSavedTunnelInfo();
+  }
+
+  /// Tente de switcher automatiquement vers l'URL appropriée (locale ou tunnel)
+  /// Retourne l'URL sélectionnée ou null en cas d'échec
+  Future<String?> trySmartUrlSwitch() async {
+    try {
+      _log.info('🔄 Tentative de switch intelligent d\'URL...');
+      final result = await _smartUrlSelector.selectServerUrl();
+
+      _log.info('✅ URL sélectionnée: ${result.url} (local: ${result.isLocal})');
+
+      // Mettre à jour l'endpoint de l'API
+      await _apiService.resolveAndSetEndpoint(result.url);
+      await Store.put(StoreKey.serverUrl, result.url);
+
+      return result.url;
+    } catch (error, stackTrace) {
+      _log.severe('❌ Échec du switch intelligent d\'URL', error, stackTrace);
+      return null;
+    }
   }
 
   Future<bool> validateAuxilaryServerUrl(String url) async {
@@ -122,6 +157,7 @@ class AuthService {
   /// - Current user information
   /// - Access token
   /// - Asset ETag
+  /// - Tunnel information
   ///
   /// All deletions are executed in parallel using [Future.wait].
   Future<void> clearLocalData() async {
@@ -136,6 +172,8 @@ class AuthService {
       Store.delete(StoreKey.preferredWifiName),
       Store.delete(StoreKey.localEndpoint),
       Store.delete(StoreKey.externalEndpointList),
+      Store.delete(StoreKey.tunnelHost),
+      Store.delete(StoreKey.publicUrl),
     ]);
   }
 
@@ -149,8 +187,50 @@ class AuthService {
   }
 
   Future<String?> setOpenApiServiceEndpoint() async {
+    // Toujours essayer la sélection intelligente d'URL en premier (ryvie.local:3013 en priorité)
+    try {
+      final result = await _smartUrlSelector.selectServerUrl();
+      _log.info('✅ Sélection intelligente URL: ${result.url} (local: ${result.isLocal})');
+
+      if (result.url.isNotEmpty) {
+        // On a déjà une URL de base fiable (locale ou tunnel).
+        // On définit directement l'endpoint API sans repasser par la découverte
+        // /.well-known/immich, qui peut être bloquée côté tunnel.
+
+        // Construire l'endpoint API (base + /api si nécessaire)
+        var apiBase = result.url;
+        if (!apiBase.endsWith('/api')) {
+          apiBase = '$apiBase/api';
+        }
+
+        // Mettre à jour l'ApiService et le store
+        _apiService.setEndpoint(apiBase);
+        await Store.put(StoreKey.serverEndpoint, apiBase);
+        await Store.put(StoreKey.serverUrl, result.url);
+
+        _log.info('✅ Endpoint configuré: $apiBase (local: ${result.isLocal})');
+        return result.url;
+      }
+    } catch (error, stackTrace) {
+      final errorStr = error.toString();
+
+      if (errorStr.contains('NO_TUNNEL_CONFIG')) {
+        _log.severe('❌ Pas de configuration tunnel');
+        // L'erreur sera gérée par le provider qui appelle cette méthode
+        rethrow;
+      }
+
+      _log.warning(
+        '⚠️  Erreur lors de la sélection intelligente URL, fallback sur méthode classique',
+        error,
+        stackTrace,
+      );
+    }
+
+    // Fallback sur l'ancienne méthode si la sélection intelligente échoue
     final enable = _authRepository.getEndpointSwitchingFeature();
     if (!enable) {
+      _log.info('ℹ️  Endpoint switching désactivé, pas de fallback');
       return null;
     }
 
